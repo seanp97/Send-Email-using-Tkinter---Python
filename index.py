@@ -15,16 +15,21 @@ message = ""
 sendTo = ""
 
 def sendEmail():
-    global email
-    email = Entry.get(userEmailEnt)
-    global password
-    password = Entry.get(userPasswordEnt)
-    global message
-    message = Entry.get(messageEnt)
-    global sendTo
-    sendTo = Entry.get(sendToEnt)
-    server.login(email, password)
-    server.sendmail(email, sendTo, message)
+    try:
+        global email
+        email = Entry.get(userEmailEnt)
+        global password
+        password = Entry.get(userPasswordEnt)
+        global message
+        message = Entry.get(messageEnt)
+        global sendTo
+        sendTo = Entry.get(sendToEnt)
+        server.login(email, password)
+        server.sendmail(email, sendTo, message)
+    except:
+        Entry.insert(userEmailEnt, 0 , "Error")
+        Entry.insert(messageEnt, 0 , "Error")
+        Entry.insert(sendToEnt, 0 , "Error")
 
 app = Tk()
 app.title("Send Email")
@@ -49,7 +54,7 @@ sendToLabel = Label(app, text="Send to", padx=5, pady=5)
 sendToLabel.grid(column=0, row=3)
 sendToEnt = Entry(app, bd=5)
 sendToEnt.grid(column=1, row=3)
-sendToBtn = Button(app, text="Submit", command=sendEmail)
-sendToBtn.grid(column=2, row=3)
+sendToBtn = Button(app, text="Submit", command=sendEmail, padx=5, pady=5)
+sendToBtn.grid(column=1, row=4)
 
 app.mainloop()
