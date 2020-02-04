@@ -3,6 +3,7 @@
 from tkinter import *
 import sys
 import tkinter
+from tkinter import messagebox
 import smtplib
 
 server = smtplib.SMTP('smtp.gmail.com', 587)
@@ -26,10 +27,12 @@ def sendEmail():
         sendTo = Entry.get(sendToEnt)
         server.login(email, password)
         server.sendmail(email, sendTo, message)
+        messagebox.showinfo('Email', 'Message has been sent')
     except:
         Entry.insert(userEmailEnt, 0 , "Error")
         Entry.insert(messageEnt, 0 , "Error")
         Entry.insert(sendToEnt, 0 , "Error")
+        messagebox.showwarning('ERROR', 'MESSAGE HAS NOT BEEN SENT!')
 
 app = Tk()
 app.title("Send Email")
